@@ -1,6 +1,8 @@
+import "./App.css";
+
 export function App() {
   return (
-    <article style={{}}>
+    <article>
       <header>
         <img src="https://unavatar.io/twitter/nicotoo_" alt="" />
         <div>
