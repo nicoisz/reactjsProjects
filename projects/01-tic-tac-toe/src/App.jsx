@@ -9,7 +9,7 @@ const TURNS = {
 const Square = ({ children, isSelected, updateBoard, index }) => {
   const className = `square ${isSelected ? "is-selected" : ""}`;
   const handleClick = () => {
-    updateBoard();
+    updateBoard(index);
   };
   return (
     <div onClick={handleClick} className={className}>
@@ -21,9 +21,17 @@ const Square = ({ children, isSelected, updateBoard, index }) => {
 function App() {
   const [board, setBoard] = useState(Array(9).fill(null));
   const [turn, setTurn] = useState(TURNS.X);
-  const updateBoard = () => {
+  const [winner, setWinner] = useState(null);
+  const updateBoard = (index) => {
+    //no actualizo si ya tiene algo la posicion
+    if (board[index]) return;
+    //cambiar turno
     const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X;
     setTurn(newTurn);
+    //actualizo el tablero
+    const newBoard = [...board];
+    newBoard[index] = turn;
+    setBoard(newBoard);
   };
   return (
     <main className="board">
