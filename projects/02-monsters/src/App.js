@@ -1,11 +1,31 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { Component, useState } from "react";
+import { useState, useEffect } from "react";
 import CardList from "./components/card-list/card-list.component";
 import InputComponent from "./components/search-box/input.component";
 
 const App = () => {
   const [searchField, setSearchField] = useState("");
+  const [monster, setMonster] = useState([]);
+  const [filteredMonsters, setFilteredMonsters] = useState(monster);
+  console.log("render");
+  useEffect(() => {
+    console.log("useEffect 1");
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((value) => value.json())
+      .then((users) => setMonster(users))
+      .catch(() => {
+        console.log("error");
+      });
+  }, []);
+
+  useEffect(() => {
+    const filteredMonsters = monster.filter((val) => {
+      return val.name.toLowerCase().includes(searchField);
+    });
+    setFilteredMonsters(filteredMonsters);
+    console.log("useEffect 2");
+  }, [monster, searchField]);
 
   const onSearchChange = (event) => {
     let searchField = event.target.value.toLowerCase();
@@ -19,10 +39,11 @@ const App = () => {
         placeholder="search monsters"
         onChangeHandler={onSearchChange}
       ></InputComponent>
+      <CardList className="monsterList" monsters={filteredMonsters}></CardList>
     </div>
   );
 };
-// <CardList className="monsterList" monsters={monsterArray}></CardList>
+//
 
 // class App extends Component {
 //   constructor() {

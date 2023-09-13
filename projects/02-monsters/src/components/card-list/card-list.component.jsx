@@ -3,10 +3,8 @@ import "./card-list.style.css";
 
 class CardList extends Component {
   render() {
-    console.log("render");
     const { monsters } = this.props;
 
-    console.log("monsters", monsters);
     return (
       <section className="monsters-list">
         {monsters.map((monster) => {
